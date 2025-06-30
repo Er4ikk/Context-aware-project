@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+
+kind: Deployment
+
+metadata:
+  name: apiparkingEvent
+  namespace: default
+  labels:
+    app: apiparkingEvent
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: apiparkingEvent
+
+  template:
+    metadata:
+      labels:
+        app: apiparkingEvent
+
+    spec:
+      containers:
+        - name: apiparkingEvent
+
+          image: docker.io/er4ikk/apiparkingEvent
+          resources:
+              requests:
+                memory: "64Mi"
+                cpu: "250m"
+              limits:
+                memory: "128Mi"
+                cpu: "500m"
+
+          ports:
+            - containerPort: 8080
