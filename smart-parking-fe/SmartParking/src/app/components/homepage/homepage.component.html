@@ -1,0 +1,18 @@
+<div>
+    <app-header></app-header>
+</div>
+
+
+<div>
+    <h2>Cerca area parcheggio bici</h2>
+<app-filter></app-filter>
+
+</div>
+
+<div id="map" (click)="getCoord($event)"  class="map-container"></div>
+
+
+<div>
+    <h2>Grafico Temporale Parcheggio</h2>
+    <app-temporal-graph></app-temporal-graph>
+</div>

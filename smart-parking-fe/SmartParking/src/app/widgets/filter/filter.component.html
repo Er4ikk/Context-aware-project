@@ -1,0 +1,22 @@
+
+
+
+<form (submit)="$event.preventDefault()">
+  <mat-form-field appearance="fill">
+    <mat-label>First name</mat-label>
+    <input matInput #first>
+    <mat-hint >Autofilled!</mat-hint>
+  </mat-form-field>
+ <mat-form-field appearance="fill">
+  <mat-label>Font size</mat-label>
+  <mat-select #fontSize value="16px" >
+    <mat-option value="10px">10px</mat-option>
+    <mat-option value="12px">12px</mat-option>
+    <mat-option value="14px">14px</mat-option>
+    <mat-option value="16px">16px</mat-option>
+    <mat-option value="18px">18px</mat-option>
+    <mat-option value="20px">20px</mat-option>
+  </mat-select>
+</mat-form-field>
+  <button mat-raised-button>Submit</button>
+</form>
