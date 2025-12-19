@@ -1,0 +1,17 @@
+FROM node:alpine AS builder
+WORKDIR /app
+COPY *.json ./
+
+COPY ./src ./src
+RUN npm install
+RUN npm install -g @angular/cli
+RUN npm run build
+
+# Stage 2: Serve Angular application using nginx
+FROM nginx:alpine
+COPY --from=builder /app/dist/smart-parking-portal /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
+
+# CMD ["ng", "serve", "--proxy-config", "proxy.config.json", "--host","0.0.0.0"] -> for dev env
+# CMD ["ng", "serve", "--proxy-config", "proxy.config.json"]

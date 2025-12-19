@@ -7,11 +7,11 @@ public class ParkingEventInfo
 {
 
     [JsonConstructor]
-    public ParkingEventInfo(int ParkingAreaId, string TimeStamp, string EventType)
+    public ParkingEventInfo(int ParkingAreaId, string EventType)
     {
         // this.Id = new Random().Next();
         this.ParkingAreaId = ParkingAreaId;
-        this.TimeStamp = TimeStamp;
+        this.TimeStamp = DateTimeOffset.Now;
         this.EventType = EventType;
     }
 
@@ -29,7 +29,7 @@ public class ParkingEventInfo
     public int Id{get;set;}
 
     public int ParkingAreaId { get; set; }
-    public string TimeStamp { get; set; }
+    public DateTimeOffset TimeStamp { get; set; }
     public string EventType{ get; set; }
 
     public ParkingEvent Convert()

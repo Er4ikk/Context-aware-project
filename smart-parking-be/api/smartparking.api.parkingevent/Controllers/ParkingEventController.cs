@@ -10,14 +10,14 @@ namespace parkingEvent.api.parkingEvent
     [ApiController]
     public class ParkingEventController : ControllerBase
     {
-        
-           private readonly PostGresClient _parkingEventClient;
-        private readonly ILogger<ParkingEventController> _logger;
-public ParkingEventController(
-                            PostGresClient parkingEventClient,
-                            ILogger<ParkingEventController> logger
 
-                         )
+        private readonly PostGresClient _parkingEventClient;
+        private readonly ILogger<ParkingEventController> _logger;
+        public ParkingEventController(
+                                    PostGresClient parkingEventClient,
+                                    ILogger<ParkingEventController> logger
+
+                                 )
         {
 
             _logger = logger;
@@ -25,7 +25,7 @@ public ParkingEventController(
 
         }
 
-    
+
 
 
         [HttpGet("{Id}")]
@@ -54,27 +54,44 @@ public ParkingEventController(
         public async Task CreateParkingEvent(ParkingEventInfo parkingEventInfo)
         {
             Console.WriteLine($"ParkingEvent with made with parkingEventId: {parkingEventInfo.Id}");
-            
+
             await _parkingEventClient.CreateParkingEvent(parkingEventInfo.Convert());
 
         }
 
-         [HttpPatch]
+        [HttpPatch]
         public async Task UpdateParkingEvent(ParkingEventInfo parkingEventInfo)
         {
             Console.WriteLine($"ParkingEvent with Id: {parkingEventInfo.Id} updating...");
-            
+
             await _parkingEventClient.UpdateParkingEvent(parkingEventInfo.Convert());
 
         }
 
+        [HttpPatch]
+        public async Task ReducePlaceLeft(int parkingAreaId)
+        {
+            _logger.LogInformation("Reducing place available to " + parkingAreaId +"...");
+            await _parkingEventClient.ReducePlaceAvailable(parkingAreaId);
+            
+        }
 
-         [HttpDelete("{Id}")]
+
+        [HttpPatch]
+        public async Task AddPlaceLeft(int parkingAreaId)
+        {
+            _logger.LogInformation("Add place available to " + parkingAreaId +"...");
+            await _parkingEventClient.AddPlaceAvailable(parkingAreaId);
+            
+        }
+
+
+        [HttpDelete("{Id}")]
         public async Task DeleteParkingEventById(int Id)
         {
             Console.WriteLine($"ParkingEvent with Id: {Id} deleting...");
-            
-            await _parkingEventClient.DeleteParkingEvent( new ParkingEvent{Id=Id});
+
+            await _parkingEventClient.DeleteParkingEvent(new ParkingEvent { Id = Id });
 
         }
     }

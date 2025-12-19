@@ -8,21 +8,20 @@ public class ParkingEvent{
     {
     }
 
-    public ParkingEvent(int ParkingAreaId, string TimeStamp, string EventType)
+    public ParkingEvent(int ParkingAreaId, DateTimeOffset TimeStamp, string EventType)
     {
-        this.Id = new Random().Next();
         this.ParkingAreaId = ParkingAreaId;
         this.TimeStamp = TimeStamp;
         this.EventType = EventType;
     }
-
+     [Column("id")]
     public int Id{get;set;}
 
-    [Column("parkingAreaId")]
+    [Column("ParkingAreaId")]
     public int ParkingAreaId { get; set; }
-    [Column("timestamp")]
-    public string TimeStamp { get; set; }
-    [Column("eventType")]
+    [Column("Timestamp")]
+    public DateTimeOffset TimeStamp { get; set; }
+    [Column("EventType")]
     public string EventType{ get; set; }
 
 

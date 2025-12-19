@@ -3,28 +3,28 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: apiparkingEvent
-  namespace: default
+  name: apiparkingevent
+  namespace: smart-parking
   labels:
-    app: apiparkingEvent
+    app: apiparkingevent
 
 spec:
   replicas: 1
 
   selector:
     matchLabels:
-      app: apiparkingEvent
+      app: apiparkingevent
 
   template:
     metadata:
       labels:
-        app: apiparkingEvent
+        app: apiparkingevent
 
     spec:
       containers:
-        - name: apiparkingEvent
+        - name: apiparkingevent
 
-          image: docker.io/er4ikk/apiparkingEvent
+          image: docker.io/er4ikk/apiparkingevent
           resources:
               requests:
                 memory: "64Mi"

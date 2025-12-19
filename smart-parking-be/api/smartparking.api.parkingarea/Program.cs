@@ -13,6 +13,12 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddOptions<DbConnectionOptions>().BindConfiguration(nameof(DbConnectionOptions));
 builder.Services.AddScoped<PostGresClient>();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.NumberHandling =
+            System.Text.Json.Serialization.JsonNumberHandling.AllowNamedFloatingPointLiterals;
+    });
 
 // builder.Services.AddOptions<DbConnectionOptionsOptions>().BindConfiguration(nameof(DbConnectionOptionsOptions));
 var app = builder.Build();

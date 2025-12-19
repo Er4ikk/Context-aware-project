@@ -1,4 +1,6 @@
 using System.Text.Json.Serialization;
+using NetTopologySuite.Geometries;
+using NetTopologySuite.IO;
 using smartparking.db.parkingarea;
 
 namespace parkingArea.api.parkingArea;
@@ -7,10 +9,11 @@ public class ParkingAreaInfo
 {
 
     [JsonConstructor]
-    public ParkingAreaInfo(NetTopologySuite.Geometries.Geometry Area, int Capacity)
+    public ParkingAreaInfo(String? Area, int MaxCapacity,int PlacesLeft)
     {
         this.Area=Area;
-        this.Capacity = Capacity;
+        this.MaxCapacity = MaxCapacity;
+        this.PlacesLeft = PlacesLeft;
     }
 
 
@@ -18,23 +21,30 @@ public class ParkingAreaInfo
     {
 
         this.Id = parkingArea.Id;
-        this.Area = parkingArea.Area;
-        this.Capacity = parkingArea.Capacity;
+       
+        this.Area = geoJsonWriter.Write(parkingArea.Area);
+        this.MaxCapacity = parkingArea.MaxCapacity;
+        this.PlacesLeft =parkingArea.PlacesLeft;
 
     }
 
   
     public int Id{get;set;}
 
-    public NetTopologySuite.Geometries.Geometry Area {get;set;}
+    public String? Area {get;set;}
 
-    public int Capacity {get;set;}
+    public int MaxCapacity {get;set;}
+    public int PlacesLeft {get;set;}
+    private GeoJsonWriter geoJsonWriter = new GeoJsonWriter();
+    private GeoJsonReader geoJsonReader = new GeoJsonReader();
     public ParkingArea Convert()
     {
         ParkingArea parkingArea = new ParkingArea();
         parkingArea.Id = this.Id;
-        parkingArea.Area = this.Area;
-        parkingArea.Capacity = this.Capacity;
+        if(this.Area!=null)
+            parkingArea.Area = geoJsonReader.Read<Polygon?>(this.Area);
+        parkingArea.MaxCapacity = this.MaxCapacity;
+        parkingArea.PlacesLeft = this.PlacesLeft;
         return parkingArea;
     }
     

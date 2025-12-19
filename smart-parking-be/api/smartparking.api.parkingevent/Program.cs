@@ -1,6 +1,6 @@
-using parkingEvent.server.order.client;
-using parkingEvent.server.parkingEvent.client;
+
 using Microsoft.AspNetCore.HttpOverrides;
+using smartparking.db.postgres;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ParkingEventClient>();
+builder.Services.AddScoped<PostGresClient>();
 
-builder.Services.AddOptions<ParkingEventClientOptions>().BindConfiguration(nameof(ParkingEventClientOptions));
+builder.Services.AddOptions<PostGresClient>().BindConfiguration(nameof(DbConnectionOptions));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

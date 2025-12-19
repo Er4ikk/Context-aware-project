@@ -58,9 +58,21 @@ namespace smartparking.db.postgres
             await _ParkingAreaContext.DeleteParkingAreaById(id);
         }
 
+        public async Task ReducePlaceAvailable(int parkingAreaId)
+        {
+            _logger.LogInformation($"Reducing Places Left ParkingArea with Id: {parkingAreaId}");
+            await _ParkingAreaContext.ReducePlaceAvailable(parkingAreaId);
+        }
+
+        public async Task AddPlaceAvailable(int parkingAreaId)
+        {
+             _logger.LogInformation($"Adding Places Left ParkingArea with Id: {parkingAreaId}");
+            await _ParkingAreaContext.AddPlaceAvailable(parkingAreaId);
+        }
+
         #endregion
-        
-         #region ParkingEvent
+
+        #region ParkingEvent
 
         public List<ParkingEvent> GetParkingEvents()
         {
@@ -74,7 +86,7 @@ namespace smartparking.db.postgres
             return _ParkingEventContext.GetParkingEventById(id);
         }
 
-     
+
         public async Task CreateParkingEvent(ParkingEvent ParkingEvent)
         {
             _logger.LogInformation($"Creating ParkingEvent with id: {ParkingEvent.Id}");
@@ -96,10 +108,10 @@ namespace smartparking.db.postgres
         }
         #endregion
 
-   
 
 
-        
+
+
 
 
 

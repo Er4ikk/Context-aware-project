@@ -21,7 +21,7 @@ EXPOSE 8080
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
-ENTRYPOINT ["./apiparkingEvent"]
+ENTRYPOINT ["./apiparkingevent"]
 
 
 # after build to run it : docker run -p 8081:80 -e ASPNETCORE_URLS=http://+:80 {{imagename}}

@@ -3,28 +3,28 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: apiparkingarea
+  name: smart-parking-portal
   namespace: smart-parking
   labels:
-    app: apiparkingarea
+    app: smart-parking-portal
 
 spec:
   replicas: 1
 
   selector:
     matchLabels:
-      app: apiparkingarea
+      app: smart-parking-portal
 
   template:
     metadata:
       labels:
-        app: apiparkingarea
+        app: smart-parking-portal
 
     spec:
       containers:
-        - name: apiparkingarea
+        - name: smart-parking-portal
 
-          image: docker.io/er4ikk/apiparkingarea
+          image: docker.io/er4ikk/smart-parking-portal
           resources:
               requests:
                 memory: "64Mi"
@@ -34,4 +34,4 @@ spec:
                 cpu: "500m"
 
           ports:
-            - containerPort: 8080
+            - containerPort: 80

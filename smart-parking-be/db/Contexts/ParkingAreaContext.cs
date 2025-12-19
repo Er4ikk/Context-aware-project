@@ -16,6 +16,7 @@ public class ParkingAreaContext:PostGresContext
     {
         //  _logger.LogInformation("Getting ParkingAreas");
         List<ParkingArea> ParkingAreas = ParkingArea
+        .Where(p => p.Area != null)
         .ToList();
 
         return ParkingAreas;
@@ -24,6 +25,7 @@ public class ParkingAreaContext:PostGresContext
     public ParkingArea GetParkingAreaById(int id)
     {
         ParkingArea parkingArea = ParkingArea.AsNoTracking()
+        .Where(p => p.Area != null)
         .Where((ParkingArea) => ParkingArea.Id == id)
         .AsEnumerable()
         .First();
@@ -41,6 +43,36 @@ public class ParkingAreaContext:PostGresContext
     public async Task UpdateParkingArea(ParkingArea parkingArea)
     {
         ParkingArea.Update(parkingArea);
+        await SaveChangesAsync();
+    }
+
+    public async Task ReducePlaceAvailable(int parkingAreaId)
+    {
+        ParkingArea parkingArea = ParkingArea.AsNoTracking()
+        .Where(p => p.Area != null)
+        .Where((ParkingArea) => ParkingArea.Id == parkingAreaId)
+        .AsEnumerable()
+        .First();
+
+        if(parkingArea.PlacesLeft > 0)
+            parkingArea.PlacesLeft-=1;
+        ParkingArea.Update(parkingArea);
+
+        await SaveChangesAsync();
+    }
+
+     public async Task AddPlaceAvailable(int parkingAreaId)
+    {
+        ParkingArea parkingArea = ParkingArea.AsNoTracking()
+        .Where(p => p.Area != null)
+        .Where((ParkingArea) => ParkingArea.Id == parkingAreaId)
+        .AsEnumerable()
+        .First();
+
+        if(parkingArea.PlacesLeft < parkingArea.MaxCapacity)
+            parkingArea.PlacesLeft+=1;
+        ParkingArea.Update(parkingArea);
+
         await SaveChangesAsync();
     }
 
