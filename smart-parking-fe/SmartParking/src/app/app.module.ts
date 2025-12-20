@@ -14,6 +14,13 @@ import { MatInputModule } from '@angular/material/input';
 import { HeaderComponent } from './components/header/header.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 
 
@@ -35,6 +42,12 @@ import {MatIconModule} from '@angular/material/icon';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    MatProgressSpinnerModule,
+    MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule
     
   ],
   providers: [],

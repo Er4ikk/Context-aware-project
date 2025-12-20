@@ -1,0 +1,14 @@
+{
+    "/ParkingEvent/api": {
+      "target": "http://localhost:5264",
+      "changeOrigin": true,
+      "secure": false,
+       "logLevel": "debug"
+    },
+     "/ParkingArea/api": {
+      "target": "http://localhost:5265",
+      "changeOrigin": true,
+      "secure": false,
+       "logLevel": "debug"
+    }
+  }

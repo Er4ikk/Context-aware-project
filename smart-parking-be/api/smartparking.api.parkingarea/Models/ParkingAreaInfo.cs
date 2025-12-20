@@ -28,7 +28,7 @@ public class ParkingAreaInfo
 
     }
 
-  
+    // [JsonIgnore]
     public int Id{get;set;}
 
     public String? Area {get;set;}
@@ -40,7 +40,7 @@ public class ParkingAreaInfo
     public ParkingArea Convert()
     {
         ParkingArea parkingArea = new ParkingArea();
-        parkingArea.Id = this.Id;
+        // parkingArea.Id = this.Id;
         if(this.Area!=null)
             parkingArea.Area = geoJsonReader.Read<Polygon?>(this.Area);
         parkingArea.MaxCapacity = this.MaxCapacity;

@@ -18,14 +18,14 @@ spec:
             port:
               number: 4201
 
-      - path: /Event
+      - path: /ParkingEvent
         pathType: Prefix
         backend:
           service:
             name: apiparkingevent-service
             port:
               number: 8080
-      - path: /Area
+      - path: /ParkingArea
         pathType: Prefix
         backend:
           service:

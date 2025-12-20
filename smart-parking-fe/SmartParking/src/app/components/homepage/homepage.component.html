@@ -5,7 +5,18 @@
 
 <div>
     <h2>Cerca area parcheggio bici</h2>
-<app-filter></app-filter>
+    <mat-grid-list cols="2" rowHeight="4:1">
+  <mat-grid-tile>
+     <app-filter></app-filter>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-spinner *ngIf="areFiltersLoading"></mat-spinner>
+  </mat-grid-tile>
+</mat-grid-list>
+    
+
+
+
 
 </div>
 
