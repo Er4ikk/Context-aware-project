@@ -38,6 +38,20 @@ namespace parkingEvent.api.parkingEvent
             return new ParkingEventInfo(parkingEvent);
 
         }
+        
+         [HttpGet("{Id}")]
+        public List<ParkingEventInfo> GetParkingEvenstByParkingAreaId(int Id)
+        {
+            _logger.LogInformation($"Getting parkingEvents with area id: {Id}");
+            //TO DO AWAIT CLIENT TO COMPLETE THE OPERATION
+
+            List<ParkingEvent> parkingEvents = _parkingEventClient.GetParkingEventsByParkingAreaId(Id);
+            List<ParkingEventInfo> parkingEventInfos= new List<ParkingEventInfo>();
+
+            parkingEvents.ForEach( (el ) => parkingEventInfos.Add(new ParkingEventInfo(el)));
+            return parkingEventInfos;
+
+        }
 
         [HttpGet]
         public List<ParkingEventInfo> GetParkingEvents()

@@ -1,0 +1,16 @@
+<div *ngIf="data$ | async as data" class="parking-area">
+  
+  <h2 class="text-detail">Details for: {{ parkingAreaName }}</h2>
+
+  <p class="text-detail">Max Capacity: {{ data.area.maxCapacity }}</p>
+  <p class="text-detail">Places Left: {{ data.area.placesLeft }}</p>
+  <!-- <div *ngIf="parkingEvents$ | async as parkingEvents"> -->
+    <!-- <app-temporal-graph [parkingEvents]="data.events" [parkingArea]="data.area"></app-temporal-graph> -->
+  <!-- </div> -->
+
+  <app-temporal-graph
+    [parkingEvents]="data.events"
+    [parkingArea]="data.area"
+  ></app-temporal-graph>
+  
+</div>

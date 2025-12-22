@@ -66,7 +66,7 @@ namespace smartparking.db.postgres
 
         public async Task AddPlaceAvailable(int parkingAreaId)
         {
-             _logger.LogInformation($"Adding Places Left ParkingArea with Id: {parkingAreaId}");
+            _logger.LogInformation($"Adding Places Left ParkingArea with Id: {parkingAreaId}");
             await _ParkingAreaContext.AddPlaceAvailable(parkingAreaId);
         }
 
@@ -84,6 +84,12 @@ namespace smartparking.db.postgres
         {
             _logger.LogInformation($"Getting information for ParkingEvent with id {id}");
             return _ParkingEventContext.GetParkingEventById(id);
+        }
+
+        public List<ParkingEvent> GetParkingEventsByParkingAreaId(int id)
+        {
+            _logger.LogInformation($"Getting parking events for Parking Area Id {id}");
+            return _ParkingEventContext.GetParkingEventsByParkingAreaId(id);
         }
 
 

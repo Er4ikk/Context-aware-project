@@ -20,6 +20,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ParkingAreaDetailComponent } from './components/parking-area-detail/parking-area-detail.component';
 
 
 
@@ -30,7 +31,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     HomepageComponent,
     FilterComponent,
     TemporalGraphComponent,
-    HeaderComponent
+    HeaderComponent,
+    ParkingAreaDetailComponent
   ],
   imports: [
     MatToolbarModule,

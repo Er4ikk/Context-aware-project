@@ -32,6 +32,18 @@ public class ParkingEventContext:PostGresContext
         return parkingEvent;
     }
 
+    public List<ParkingEvent> GetParkingEventsByParkingAreaId(int id)
+    {
+        List<ParkingEvent> parkingEvent = ParkingEvent.AsNoTracking()
+        .Where((ParkingEvent) => ParkingEvent.ParkingAreaId == id)
+        .AsEnumerable()
+        .Take(10)
+        .OrderByDescending(parkingEvent => parkingEvent.TimeStamp)
+        .ToList();
+
+        return parkingEvent;
+    }
+
     public async Task CreateParkingEvent(ParkingEvent parkingEvent)
     {
         await ParkingEvent.AddAsync(parkingEvent);

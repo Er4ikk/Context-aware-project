@@ -18,7 +18,12 @@ export interface PolygonCoordinates {
 
 export interface FiltersPayload{
   parkingAreaName:string,
-  dateRange:string[]
+  dateRange:TimeRange
+}
+
+export interface TimeRange{
+  start:string | undefined,
+  end:string | undefined
 }
 
 export const PlacesLeftColor = {
@@ -27,6 +32,14 @@ export const PlacesLeftColor = {
   MAX_PLACE_LEFT: [0, 204, 102, 0.7],
   UKNOWN:[153, 102, 51, 0.7]
 
+
+}
+
+export const EventType={
+
+     PARKING : "Parking",
+     LEAVING : "Leaving"
+    
 
 }
 

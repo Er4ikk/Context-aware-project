@@ -11,12 +11,12 @@ import { Vector } from 'ol/source';
 import Fill from 'ol/style/Fill';
 import Style from 'ol/style/Style';
 import Stroke from 'ol/style/Stroke';
-import Select from 'ol/interaction/Select';
+import Select, { SelectEvent } from 'ol/interaction/Select';
 
 import { Utils } from 'src/app/entities/utils';
 import { ParkingAreaService } from 'src/app/services/parking-area.service';
-import { filter, Subject, take, tap } from 'rxjs';
-import { ParkingArea, PlacesLeftColor, PolygonCoordinates } from 'src/app/entities/entities';
+import {  Subject, take, tap } from 'rxjs';
+import { FiltersPayload, ParkingArea, PlacesLeftColor, PolygonCoordinates } from 'src/app/entities/entities';
 import { FilterService } from 'src/app/services/filter.service';
 import BaseLayer from 'ol/layer/Base';
 
@@ -41,15 +41,16 @@ export class HomepageComponent implements OnInit {
     }),
   });
 
-  selectSingleClick = new Select({ style: this.selectStyle });
-
-  selectElement = document.getElementById('type');
+  select: Select = new Select({
+    style: this.selected
+  })
 
 
   private ParkingAreas: ParkingArea[] = []
   areFiltersLoading: boolean = false;
 
-  filters$: Subject<string> = new Subject();
+  filters$: Subject<FiltersPayload> = new Subject();
+  // parkingAreaSelected$ : Subject<string> = new Subject();
 
 
   constructor(
@@ -71,9 +72,12 @@ export class HomepageComponent implements OnInit {
       target: 'map'
     });
 
-    console.log(this.selected)
-    // this.addOSMLayer('green-area')
-    this.map.addInteraction(this.selectSingleClick)
+    this.map.addInteraction(this.select)
+
+    this.select.addEventListener('select',(event)=>{
+      this.OnAreaSelected(( event as SelectEvent))
+    })
+
     this.parkingAreaSvc.getParkingAreas()
       .pipe(
         take(1),
@@ -89,7 +93,7 @@ export class HomepageComponent implements OnInit {
     //getting layers and then filter them with the layer searched
 
     this.filters$.pipe(
-      tap(value => this.filterByParkingArea(value))
+      tap(value => this.filterByParkingArea(value.parkingAreaName))
     ).subscribe()
 
     this.FilterSvc.filterLoading$.pipe(
@@ -99,7 +103,22 @@ export class HomepageComponent implements OnInit {
 
   }
 
+  public OnAreaSelected(event:SelectEvent):void{
+    // console.log(event)
+    let layer : VectorLayer;
+    if(event.selected[0] != null){
+      layer = this.select.getLayer(event.selected[0])
+      let layerName:string =layer.get("name")
+      this.parkingAreaSvc.parkingAreaSelected$.next(layerName)
+      // debugger
+    }else{
+      alert("The area couldn't be found")
+    }
+       
 
+    
+    
+  }
   getCoord(event: any) {
     var coordinate = this.map.getEventCoordinate(event);
     console.log(coordinate)
@@ -126,6 +145,7 @@ export class HomepageComponent implements OnInit {
 
   public filterByParkingArea(parkingAreaName: string) {
     this.areFiltersLoading = true;
+    
     if (parkingAreaName != null && parkingAreaName == "")
       this.resetFilters()
 
