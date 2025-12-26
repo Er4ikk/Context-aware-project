@@ -15,10 +15,11 @@ import Select, { SelectEvent } from 'ol/interaction/Select';
 
 import { Utils } from 'src/app/entities/utils';
 import { ParkingAreaService } from 'src/app/services/parking-area.service';
-import {  Subject, take, tap } from 'rxjs';
+import { filter, Subject, take, tap } from 'rxjs';
 import { FiltersPayload, ParkingArea, PlacesLeftColor, PolygonCoordinates } from 'src/app/entities/entities';
 import { FilterService } from 'src/app/services/filter.service';
 import BaseLayer from 'ol/layer/Base';
+import { ParkingEventService } from 'src/app/services/parking-event.service';
 
 @Component({
   selector: 'app-homepage',
@@ -55,6 +56,7 @@ export class HomepageComponent implements OnInit {
 
   constructor(
     private parkingAreaSvc: ParkingAreaService,
+    private parkingEventSvc: ParkingEventService,
     private FilterSvc: FilterService
   ) { }
   map!: Map;
@@ -74,8 +76,8 @@ export class HomepageComponent implements OnInit {
 
     this.map.addInteraction(this.select)
 
-    this.select.addEventListener('select',(event)=>{
-      this.OnAreaSelected(( event as SelectEvent))
+    this.select.addEventListener('select', (event) => {
+      this.OnAreaSelected((event as SelectEvent))
     })
 
     this.parkingAreaSvc.getParkingAreas()
@@ -93,7 +95,7 @@ export class HomepageComponent implements OnInit {
     //getting layers and then filter them with the layer searched
 
     this.filters$.pipe(
-      tap(value => this.filterByParkingArea(value.parkingAreaName))
+      tap(value => this.applyFilters(value))
     ).subscribe()
 
     this.FilterSvc.filterLoading$.pipe(
@@ -103,21 +105,21 @@ export class HomepageComponent implements OnInit {
 
   }
 
-  public OnAreaSelected(event:SelectEvent):void{
+  public OnAreaSelected(event: SelectEvent): void {
     // console.log(event)
-    let layer : VectorLayer;
-    if(event.selected[0] != null){
+    let layer: VectorLayer;
+    if (event.selected[0] != null) {
       layer = this.select.getLayer(event.selected[0])
-      let layerName:string =layer.get("name")
+      let layerName: string = layer.get("name")
       this.parkingAreaSvc.parkingAreaSelected$.next(layerName)
-      // debugger
-    }else{
+      // 
+    } else {
       alert("The area couldn't be found")
     }
-       
 
-    
-    
+
+
+
   }
   getCoord(event: any) {
     var coordinate = this.map.getEventCoordinate(event);
@@ -143,18 +145,30 @@ export class HomepageComponent implements OnInit {
     })
   }
 
+  public applyFilters(filters: FiltersPayload) {
+    
+    if (filters != null) {
+      this.resetFilters()
+      if (filters.dateRange != null && filters.dateRange.start != "" && filters.dateRange.end != "") {
+        this.parkingEventSvc.getParkingAreaSnapshotByTimeRange(filters.dateRange.start, filters.dateRange.end)
+        .pipe(
+          tap(parkingAreas => this.ParkingAreas = parkingAreas)
+        ).subscribe();
+      }
+      this.filterByParkingArea(filters.parkingAreaName);
+    }
+
+  }
   public filterByParkingArea(parkingAreaName: string) {
     this.areFiltersLoading = true;
-    
-    if (parkingAreaName != null && parkingAreaName == "")
+
+    if (parkingAreaName == null || parkingAreaName == ""){
       this.resetFilters()
-
-
-
-    this.map.getLayers().forEach(
+    }else{
+      this.map.getLayers().forEach(
       (layer: BaseLayer) => {
         var name: string = layer.get('name')
-        // debugger
+        // 
         if (name != undefined && !name.includes(parkingAreaName)) {
           layer.setVisible(false)
         } else {
@@ -163,6 +177,12 @@ export class HomepageComponent implements OnInit {
 
       }
     )
+    }
+      
+
+
+
+    
     this.areFiltersLoading = false
   }
 
@@ -176,7 +196,7 @@ export class HomepageComponent implements OnInit {
       type: "FeatureCollection",
       features: areas
     }
-    // debugger
+    // 
     return featureCollection;
   }
 
@@ -186,7 +206,7 @@ export class HomepageComponent implements OnInit {
 
 
   public addOSMLayer(name: string, geoJsonData?: any, color?: number[]) {
-    // debugger
+    // 
     if (geoJsonData == null)
       geoJsonData = Utils.getData(name)
     const vectorSource = new Vector({
@@ -225,7 +245,7 @@ export class HomepageComponent implements OnInit {
 
   selectStyle(feature: any): Style {
     const color = feature.get('COLOR') || '#eeeeee';
-    // debugger
+    // 
     console.log(this.selected)
     // if(this.selected != null)
     var test = this.selected.getFill()

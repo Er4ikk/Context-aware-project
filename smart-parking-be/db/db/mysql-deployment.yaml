@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: postgres
-        image: docker.io/er4ikk/postgres:latest
+        image: docker.io/er4ikk/smart-parking-db:latest
         resources:
               requests:
                 memory: "1Gi"
@@ -27,12 +27,12 @@ spec:
                 memory: "2Gi"
                 cpu: "800m"
         ports:
-        - containerPort: 3306
+        - containerPort: 5432
           name: postgres
         volumeMounts:
-        - name: postgres-persistent-storage
-          mountPath: /var/lib/postgres
+        - name: postgres-pv-volume
+          mountPath: /var/lib/postgres_data
       volumes:
-      - name: postgres-persistent-storage
+      - name: postgres-pv-volume
         persistentVolumeClaim:
           claimName: postgres-pv-claim

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
-import { ParkingArea, ParkingEvent } from 'src/app/entities/entities';
+import { combineLatest, filter, Observable, repeatWhen, switchMap, tap } from 'rxjs';
+import { FiltersPayload, ParkingArea, ParkingEvent } from 'src/app/entities/entities';
+import { FilterService } from 'src/app/services/filter.service';
 import { ParkingAreaService } from 'src/app/services/parking-area.service';
 import { ParkingEventService } from 'src/app/services/parking-event.service';
 
@@ -15,10 +16,19 @@ export class ParkingAreaDetailComponent implements OnInit {
   parkingEvents$: Observable<ParkingEvent[]> | undefined; 
   parkingAreaName:string="";
   isShown=false;
+
+  filtersValue:FiltersPayload ={
+    parkingAreaName: '',
+    dateRange: {
+      start: '',
+      end: ''
+    }
+  };
   data$: Observable<{ area: ParkingArea, events: ParkingEvent[] }> | undefined;
   constructor(
     private parkingAreaSvc:ParkingAreaService,
-    private parkingEventsSvc:ParkingEventService
+    private parkingEventsSvc:ParkingEventService,
+    private filterSvc:FilterService
   ) { }
 
   ngOnInit(): void {
@@ -36,18 +46,27 @@ export class ParkingAreaDetailComponent implements OnInit {
   //   })
   // );
 
+  // this.filterSvc.filterSubject.pipe(
+  //   tap((filtersPayload) => this.filtersValue = filtersPayload)
+  // ).subscribe()
 
-  this.data$ = this.parkingAreaSvc.parkingAreaSelected$.pipe(
-    filter(name => !!name), 
-    switchMap(name => {
-      const id = +name.charAt(name.length - 1);
-      this.parkingAreaName = name;
-      
-      return combineLatest({
-        area: this.parkingAreaSvc.getParkingAreaById(id),
-        events: this.parkingEventsSvc.getParkingEventsByParkingAreaId(id)
-      });
-    })
+
+  this.data$ = (combineLatest([this.parkingAreaSvc.parkingAreaSelected$.pipe(filter(name => !!name)),this.filterSvc.filterSubject])).pipe(
+  switchMap(([parkingAreaName,filtersPayload]:[string,FiltersPayload]) => {
+    this.parkingAreaName = parkingAreaName;
+    const id:number = +this.parkingAreaName.charAt(this.parkingAreaName.length-1) 
+    
+    return combineLatest({
+      area: this.parkingAreaSvc.getParkingAreaById(id),
+      events: filtersPayload.dateRange.start !== '' ?
+        this.parkingEventsSvc.getParkingEventsOfParkingAreaByTimeRange(
+          filtersPayload.dateRange.start, 
+         filtersPayload.dateRange.end, 
+          id
+        ) :
+        this.parkingEventsSvc.getParkingEventsByAreaId(id)
+    });
+  })
   );
 
   }

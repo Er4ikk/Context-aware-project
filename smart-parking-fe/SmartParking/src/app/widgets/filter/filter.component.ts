@@ -31,8 +31,8 @@ export class FilterComponent implements OnInit {
         let filterPayload: FiltersPayload = {
           parkingAreaName: value,
           dateRange: {
-            start: undefined,
-            end: undefined
+            start: "",
+            end: ""
           }
         }
         this.filterSvc.filterSubject.next(filterPayload)
@@ -44,13 +44,13 @@ export class FilterComponent implements OnInit {
       tap((value) => {
         if (value.start != null) {
           let startDate: Date = new Date(value.start)
-          let endDate: Date | undefined = undefined;
+          let endDate: Date= new Date();
           if (value.end)
             endDate = new Date(value.end)
           // to continue add also the end date
           let timeRange: TimeRange = {
             start: startDate.toISOString(),
-            end: endDate?.toISOString()
+            end: endDate.toISOString()
           }
           let filterPayload: FiltersPayload = {
             parkingAreaName: this.parkingAreaName.value,
@@ -62,6 +62,11 @@ export class FilterComponent implements OnInit {
         // console.log(this.formatDateToPostgres())
       })
     ).subscribe()
+  }
+
+  resetFilters(){
+    this.parkingAreaName.reset()
+    this.range.reset()
   }
 
 

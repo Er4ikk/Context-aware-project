@@ -56,17 +56,17 @@ namespace parkingEvent.api.parkingEvent
 
         }
 
-        [HttpGet("{start}/{end}")]
-        public List<ParkingEventInfo> GetParkingEvenstByTimeRange(DateTimeOffset start,DateTimeOffset end)
+        [HttpGet("{start}/{end}/{parkingAreaId}")]
+        public List<ParkingEventInfo> GetParkingEvenstByTimeRange(DateTimeOffset start,DateTimeOffset end,int parkingAreaId)
         {
-            _logger.LogInformation($"Getting events between time range {start} - {end}");
+            _logger.LogInformation($"Getting events between time range {start} - {end} parking area id: {parkingAreaId}");
             //TO DO AWAIT CLIENT TO COMPLETE THE OPERATION
 
             List<ParkingEvent> parkingEvents = _parkingEventClient.GetParkingEventsByTimeRange(start,end);
             List<ParkingEventInfo> parkingEventInfos= new List<ParkingEventInfo>();
 
             parkingEvents.ForEach( (el ) => parkingEventInfos.Add(new ParkingEventInfo(el)));
-            return parkingEventInfos;
+            return parkingEventInfos.Where(parkingEvent => parkingEvent.ParkingAreaId == parkingAreaId).ToList();
 
         }
 

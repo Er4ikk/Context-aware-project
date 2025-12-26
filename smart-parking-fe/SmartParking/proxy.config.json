@@ -1,12 +1,18 @@
 {
     "/ParkingEvent/api": {
-      "target": "http://localhost:5264",
+      "target": "http://smartparking2.com",
       "changeOrigin": true,
       "secure": false,
        "logLevel": "debug"
     },
      "/ParkingArea/api": {
-      "target": "http://localhost:5265",
+      "target": "http://smartparking2.com",
+      "changeOrigin": true,
+      "secure": false,
+       "logLevel": "debug"
+    },
+    "/User/api": {
+      "target": "http://smartparking2.com",
       "changeOrigin": true,
       "secure": false,
        "logLevel": "debug"

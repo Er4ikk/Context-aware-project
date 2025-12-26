@@ -17,13 +17,13 @@
        <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="4.0.0" />
      <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Cosmos" Version="7.0.0" />
-    <!-- <PackageReference Include="SmartParking.Db.ClientTest" Version="1.0.0" /> -->
+    <PackageReference Include="SmartParking.Db.ClientTest" Version="1.1.0" />
     
   </ItemGroup>
 
-  <ItemGroup>
+  <!-- <ItemGroup>
   
        <ProjectReference Include="/home/giulio/Scrivania/MAG/CONTEXT-AWARE/Context-aware-project/smart-parking-be/db/smartparking.db.client.csproj" />
-  </ItemGroup>
+  </ItemGroup> -->
 
 </Project>

@@ -32,6 +32,13 @@ spec:
             name: apiparkingarea-service
             port:
               number: 8080
+      - path: /User
+        pathType: Prefix
+        backend:
+          service:
+            name: apiuser-service
+            port:
+              number: 8080
       
       
         

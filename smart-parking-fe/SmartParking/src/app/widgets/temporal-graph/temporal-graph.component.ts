@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Input, LOCALE_ID, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { Observable, tap } from 'rxjs';
+import {formatDate} from '@angular/common';
 import { EventType, ParkingArea, ParkingEvent } from 'src/app/entities/entities';
 
 
@@ -21,7 +22,10 @@ export class TemporalGraphComponent implements OnInit, OnChanges {
 
 	chartOptions = {}
 	chart: any;
-	constructor(private cdr: ChangeDetectorRef) {
+	constructor(
+		private cdr: ChangeDetectorRef,
+		@Inject(LOCALE_ID) private locale: string
+	) {
 
 	}
 
@@ -75,7 +79,7 @@ export class TemporalGraphComponent implements OnInit, OnChanges {
 		let coordinates: Coordinate[] = [];
 		let coordinate: Coordinate
 		let placeLeft: number = 0;
-		// debugger
+		// 
 		if (this.parkingArea && this.parkingEvents) {
 
 			placeLeft = this.parkingArea.placesLeft;
@@ -91,7 +95,7 @@ export class TemporalGraphComponent implements OnInit, OnChanges {
 					coordinate = {
 						x: index,
 						y: placeLeft,
-						indexLabel: parkingEvent.timeStamp
+						indexLabel: formatDate(parkingEvent.timeStamp,"dd/MM/yyyy",this.locale)
 					}
 
 					coordinates.push(coordinate)

@@ -27,7 +27,7 @@ var app = builder.Build();
 // if (app.Environment.IsDevelopment())
 // {
 
-app.UsePathBase("/ParkingArea");
+app.UsePathBase("/User");
 
 app.UseSwagger();
 app.UseSwaggerUI(c =>

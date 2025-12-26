@@ -22,8 +22,8 @@ export interface FiltersPayload{
 }
 
 export interface TimeRange{
-  start:string | undefined,
-  end:string | undefined
+  start:string ,
+  end:string
 }
 
 export const PlacesLeftColor = {
