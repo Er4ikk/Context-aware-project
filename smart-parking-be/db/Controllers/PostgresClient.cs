@@ -13,6 +13,7 @@ namespace smartparking.db.postgres
         private readonly ParkingAreaContext _ParkingAreaContext = new ParkingAreaContext(configuration);
 
         private readonly ParkingEventContext _ParkingEventContext = new(configuration);
+        private readonly UserContext _UserContext= new UserContext(configuration);
 
         #region ParkingArea
 
@@ -92,6 +93,40 @@ namespace smartparking.db.postgres
             return _ParkingEventContext.GetParkingEventsByParkingAreaId(id);
         }
 
+        public List<ParkingEvent> GetParkingEventsByTimeRange(DateTimeOffset start, DateTimeOffset end)
+        {
+            _logger.LogInformation($"Getting parking events between time range {start} - {end}");
+            return _ParkingEventContext.GetParkingEventsByTimeRange(start,end);
+        }
+
+        public List<ParkingArea> GetParkingAreaSnapshotByTimeRange(DateTimeOffset start, DateTimeOffset end)
+        {
+            _logger.LogInformation($"Getting Parking Area snapshots using from {start} - {end}");
+            List<ParkingEvent> parkingEvents = GetParkingEventsByTimeRange(start,end);
+            List<ParkingArea> parkingAreas = GetParkingAreas();
+            List<ParkingEvent> parkingEventsForArea;
+
+            parkingAreas.ForEach(parkingArea =>
+            {
+                parkingEventsForArea = parkingEvents.Where(ev => ev.ParkingAreaId == parkingArea.Id).ToList();
+
+               parkingEventsForArea.ForEach(ev =>
+               {
+                   if (ev.EventType == EventType.PARKING && parkingArea.PlacesLeft < parkingArea.MaxCapacity)
+                   {
+                       parkingArea.PlacesLeft++;
+                   }
+                   else if (ev.EventType == EventType.LEAVING && parkingArea.PlacesLeft > 0)
+                   {
+                       parkingArea.PlacesLeft--;
+                   }
+               });
+            });
+
+            return parkingAreas;
+
+        }
+
 
         public async Task CreateParkingEvent(ParkingEvent ParkingEvent)
         {
@@ -114,7 +149,63 @@ namespace smartparking.db.postgres
         }
         #endregion
 
+        #region User
+         public List<User> GetUsers()
+        {
+            _logger.LogInformation("Getting Users");
+            return _UserContext.GetUsers();
+        }
 
+
+
+        public User GetUserById(int id)
+        {
+            _logger.LogInformation($"Getting information for User with id {id}");
+            return _UserContext.GetUserById(id);
+        }
+
+        public User GetUserByMail(string mail)
+        {
+            _logger.LogInformation($"Getting information for User with mail {mail}");
+            return _UserContext.GetUserByEmail(mail);
+        }
+
+
+        public async Task CreateUser(User User)
+        {
+            _logger.LogInformation($"Creating User: {User.Id}");
+            await _UserContext.CreateUser(User);
+        }
+
+
+        public async Task UpdateUser(User User)
+        {
+            _logger.LogInformation($"Updating User with Id: {User.Id}");
+            await _UserContext.UpdateUser(User);
+        }
+
+
+        public async Task DeleteUser(User User)
+        {
+            _logger.LogInformation($"Deleting User with Id: {User.Id}");
+            await _UserContext.DeleteUser(User);
+        }
+
+
+        public async Task DeleteUserById(int id)
+        {
+            _logger.LogInformation($"Deleting User with Id: {id}");
+            await _UserContext.DeleteUserById(id);
+        }
+
+         public async Task DeleteUserByMail(string mail)
+        {
+            _logger.LogInformation($"Deleting User with mail: {mail}");
+            await _UserContext.DeleteUserByEmail(mail);
+        }
+
+  
+        #endregion
 
 
 

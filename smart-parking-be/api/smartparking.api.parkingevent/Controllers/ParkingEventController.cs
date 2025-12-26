@@ -1,8 +1,10 @@
 
 
 using Microsoft.AspNetCore.Mvc;
+using smartparking.db.parkingarea;
 using smartparking.db.parkingevent;
 using smartparking.db.postgres;
+using NetTopologySuite.IO;
 
 namespace parkingEvent.api.parkingEvent
 {
@@ -13,6 +15,7 @@ namespace parkingEvent.api.parkingEvent
 
         private readonly PostGresClient _parkingEventClient;
         private readonly ILogger<ParkingEventController> _logger;
+        private GeoJsonWriter geoJsonWriter = new GeoJsonWriter();
         public ParkingEventController(
                                     PostGresClient parkingEventClient,
                                     ILogger<ParkingEventController> logger
@@ -50,6 +53,34 @@ namespace parkingEvent.api.parkingEvent
 
             parkingEvents.ForEach( (el ) => parkingEventInfos.Add(new ParkingEventInfo(el)));
             return parkingEventInfos;
+
+        }
+
+        [HttpGet("{start}/{end}")]
+        public List<ParkingEventInfo> GetParkingEvenstByTimeRange(DateTimeOffset start,DateTimeOffset end)
+        {
+            _logger.LogInformation($"Getting events between time range {start} - {end}");
+            //TO DO AWAIT CLIENT TO COMPLETE THE OPERATION
+
+            List<ParkingEvent> parkingEvents = _parkingEventClient.GetParkingEventsByTimeRange(start,end);
+            List<ParkingEventInfo> parkingEventInfos= new List<ParkingEventInfo>();
+
+            parkingEvents.ForEach( (el ) => parkingEventInfos.Add(new ParkingEventInfo(el)));
+            return parkingEventInfos;
+
+        }
+
+
+        [HttpGet("{start}/{end}")]
+        public List<ParkingAreaWrapper> GetParkingAreasSnapshotByTimeRange(DateTimeOffset start,DateTimeOffset end)
+        {
+            _logger.LogInformation($"Getting parking area snaphsot between time range {start} - {end}");
+            //TO DO AWAIT CLIENT TO COMPLETE THE OPERATION
+
+            List<ParkingArea> parkingAreasSnapshot = _parkingEventClient.GetParkingAreaSnapshotByTimeRange(start,end);
+            List<ParkingAreaWrapper> parkingAreaWrappers = parkingAreasSnapshot.Select(snapshot => new ParkingAreaWrapper(snapshot)).ToList();
+            
+            return parkingAreaWrappers;
 
         }
 
@@ -109,4 +140,6 @@ namespace parkingEvent.api.parkingEvent
 
         }
     }
+
+
 }

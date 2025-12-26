@@ -44,6 +44,21 @@ public class ParkingEventContext:PostGresContext
         return parkingEvent;
     }
 
+    public List<ParkingEvent> GetParkingEventsByTimeRange(DateTimeOffset start, DateTimeOffset end)
+    {
+        DateTimeOffset startUtc = start.ToUniversalTime();
+        DateTimeOffset endUtc = end.ToUniversalTime();
+        
+        //https://learn.microsoft.com/en-us/ef/core/querying/client-eval -> not use DateTimeOffset.CompareTO() or DateTimeOffset.toUniversalTIme()
+         List<ParkingEvent> parkingEvents = ParkingEvent.AsNoTracking()
+        .Where((ParkingEvent) => 
+        ParkingEvent.TimeStamp >= startUtc &&
+        ParkingEvent.TimeStamp <= endUtc)
+        .ToList();
+
+        return parkingEvents;
+    }
+
     public async Task CreateParkingEvent(ParkingEvent parkingEvent)
     {
         await ParkingEvent.AddAsync(parkingEvent);

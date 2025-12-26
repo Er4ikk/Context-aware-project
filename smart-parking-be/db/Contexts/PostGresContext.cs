@@ -18,6 +18,7 @@ public class PostGresContext(IConfiguration configuration) : DbContext
 
     public DbSet<ParkingArea> ParkingArea { get; set; }
     public DbSet<ParkingEvent> ParkingEvent { get; set; }
+    public DbSet<User>User{get;set;}
 
 
     // requires using Microsoft.Extensions.Configuration;
@@ -39,7 +40,7 @@ public class PostGresContext(IConfiguration configuration) : DbContext
 
             entity.Property(e => e.Area)
                 .HasColumnName("Area")
-              .HasColumnType("geometry(Polygon, 4326)")   
+              .HasColumnType("geometry(Polygon, 4326)")
               .IsRequired();
 
             entity.Property(e => e.MaxCapacity);
@@ -48,10 +49,21 @@ public class PostGresContext(IConfiguration configuration) : DbContext
 
         builder.Entity<ParkingEvent>(entity =>
    {
-       entity.ToTable("ParkingEvent"); 
+       entity.ToTable("ParkingEvent");
        entity.HasKey(e => e.Id);
        entity.Property(e => e.Id).HasColumnName("id");
+
    });
+
+     builder.Entity<User>(entity =>
+   {
+       entity.ToTable("User");
+       entity.HasKey(e => e.Id);
+       entity.Property(e => e.Id).HasColumnName("id");
+
+   });
+
+    // builder.Entity<Coordinate>(entity => entity.HasNoKey());
 
 
     }

@@ -19,6 +19,7 @@ public class ParkingArea{
 
     }
 
+    
     public int Id{get;set;}
     [Column("Area")]
     public Polygon? Area {get;set;}
