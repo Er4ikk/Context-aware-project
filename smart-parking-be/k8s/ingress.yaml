@@ -4,8 +4,9 @@ metadata:
   name: minimal-ingress
   namespace: smart-parking
   annotations:
-    kubernetes.io/ingress.class: public
+    kubernetes.io/ingress.class: "nginx"
 spec:
+  ingressClassName: nginx
   rules:
   - host: smartparking2.com
     http:

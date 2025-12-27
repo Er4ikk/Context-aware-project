@@ -32,7 +32,7 @@ app.UsePathBase("/User");
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/ParkingArea/swagger/v1/swagger.json", "My API V1");
+    c.SwaggerEndpoint("/User/swagger/v1/swagger.json", "My API V1");
 });
 
 // }
