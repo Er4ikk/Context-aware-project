@@ -9,6 +9,7 @@
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <!-- <UseMauiEssentials>true</UseMauiEssentials> -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,10 +18,11 @@
     </AndroidResource>
   </ItemGroup>
 
-  <ItemGroup>
+ <ItemGroup>
     <PackageReference Include="Avalonia.Android" />
+    <!-- <PackageReference Include="Microsoft.Maui.ApplicationModel" /> -->
     <PackageReference Include="Xamarin.AndroidX.Core.SplashScreen" />
-  </ItemGroup>
+</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SmartParkingMobile\SmartParkingMobile.csproj" />

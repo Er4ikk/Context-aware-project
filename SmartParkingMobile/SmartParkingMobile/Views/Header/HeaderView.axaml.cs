@@ -1,14 +1,18 @@
+using System;
 using Avalonia.Controls;
+using Avalonia.Markup.Xaml;
 using SmartParkingMobile.ViewModels;
 
 namespace SmartParkingMobile.Views;
 
-public partial class MainView : UserControl
+public partial class HeaderView : UserControl
 {
-
-    public MainView()
+   public HeaderView()
     {
         InitializeComponent();
-        
+
+      
     }
+
+  
 }
