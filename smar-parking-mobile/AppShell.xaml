@@ -7,7 +7,7 @@
     Title="smar_parking_mobile">
 
     <ShellContent
-        Title="Home"
+       
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
