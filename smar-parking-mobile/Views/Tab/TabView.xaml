@@ -2,11 +2,51 @@
   xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
   xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
   xmlns:local="clr-namespace:smar_parking_mobile"
-   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-  mc:Ignorable="d"
-  d:DesignWidth="800"
-  d:DesignHeight="450"
-  x:Class="smar_parking_mobile.Views.TabView">
-  
+  x:Class="smar_parking_mobile.Views.TabView"
+  VerticalOptions="End"
+  >
+
+
+  <Grid RowSpacing="15"  >
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <Button Grid.Row="0"
+        
+        x:Name="ReleaseSmartBikeBtn"
+        Clicked="ReleaseSmartBikeBtn_Clicked"
+        WidthRequest="175"
+        HeightRequest="175"
+        CornerRadius="90"
+        BackgroundColor="#333F69"
+       
+        Text="Release a SmartBike!"/>
+    <Grid Padding="25" BackgroundColor="#FFFFFF" ColumnSpacing="50" Grid.Row="1">
+      <Grid.RowDefinitions>
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+        <ColumnDefinition/>
+
+      </Grid.ColumnDefinitions>
+
+      <Button x:Name="UserPageBtn"
+          Grid.Row="0"
+          Grid.Column="0"
+          Text="User"/>
+      <Button x:Name="MapPageBtn"
+          Grid.Row="0"
+          Grid.Column="1"
+          Text="Map"/>
+
+    </Grid>
+  </Grid>
+
+
+
 </ContentView>

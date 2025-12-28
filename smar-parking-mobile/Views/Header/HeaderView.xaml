@@ -12,12 +12,12 @@
 
   <!--  LAYOUT  -->
   <!-- <StackPanel> -->
-    <Grid ColumnDefinitions="Auto, *">
+    <!-- <Grid ColumnDefinitions="Auto, *"> -->
 
       <SearchBar TextChanged="OnTextChanged" Placeholder="Search items..."/>
       <!-- <ListView x:Name="searchResults"> -->
 
 
-    </Grid>
+    <!-- </Grid> -->
   <!-- </StackPanel> -->
 </ContentView>

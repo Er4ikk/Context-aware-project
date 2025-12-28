@@ -1,8 +1,5 @@
 
 using System.Diagnostics;
-using Android.App.AppSearch;
-using Android.Widget;
-
 namespace smar_parking_mobile.Views;
 
 public partial class HeaderView : ContentView

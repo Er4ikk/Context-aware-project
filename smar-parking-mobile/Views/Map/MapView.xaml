@@ -1,14 +1,60 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:smar_parking_mobile"
-             x:Class="smar_parking_mobile.Views.MapView">
+             xmlns:maps="http://schemas.microsoft.com/dotnet/2021/maui/maps"
+             xmlns:viewmodels="clr-namespace:smar_parking_mobile.ViewModels"
+             xmlns:models="clr-namespace:smar_parking_mobile.Models"
+             x:Class="smar_parking_mobile.Views.MapView"
+             x:DataType="viewmodels:MapViewModel">
 
-  <Grid>
-    <Label Text=""></Label>
-    <!-- <mapsui:MapControl
-      HorizontalAlignment="Stretch"
-      VerticalAlignment="Stretch"
-      Map="{Binding Map}" /> -->
-  </Grid>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <maps:Map Grid.Row="0"
+                IsShowingUser="True"
+                x:Name="map"
+                HeightRequest="550"
+                />
+        <!-- <CollectionView Grid.Row="1"
+                ItemsSource="{Binding ParkingAreas}"
+                        VerticalOptions="End"
+                        HeightRequest="250"
+                        Margin="10,0,10,20">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal"
+                        ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:ParkingAreaInfo">
+                    <Frame BackgroundColor="White"
+                           CornerRadius="10"
+                           WidthRequest="200"
+                           HasShadow="True"
+                           Padding="10">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding Id}"
+                                    FontSize="16"/>
+                            <Label Text="{Binding PlacesLeft, StringFormat='Posti: {0}'}"
+                                   TextColor="Green"/>
+                            <Label Text="Dettagli..."
+                                    FontSize="12"
+                                    TextColor="Gray"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Text="{Binding Id}"
+               HorizontalOptions="Center"
+                VerticalOptions="Start"
+               BackgroundColor="#80FFFFFF"
+                Padding="5"/> -->
+    </Grid>
 </ContentView>
