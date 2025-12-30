@@ -7,7 +7,7 @@
   >
 
 
-  <Grid RowSpacing="15"  >
+  <Grid ZIndex="1"   Margin="0,-20,0,0"  >
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
@@ -16,16 +16,21 @@
       <ColumnDefinition/>
     </Grid.ColumnDefinitions>
     <Button Grid.Row="0"
-        
+       
         x:Name="ReleaseSmartBikeBtn"
         Clicked="ReleaseSmartBikeBtn_Clicked"
         WidthRequest="175"
         HeightRequest="175"
         CornerRadius="90"
         BackgroundColor="#333F69"
-       
+        ImageSource="bike.png"
+        ContentLayout="Top"
+        LineBreakMode="WordWrap"
+        FontSize="18"
+        FontAttributes="Bold"
         Text="Release a SmartBike!"/>
-    <Grid Padding="25" BackgroundColor="#FFFFFF" ColumnSpacing="50" Grid.Row="1">
+    <Grid 
+       Padding="25"  BackgroundColor="#FFFFFF" ColumnSpacing="50" Grid.Row="1">
       <Grid.RowDefinitions>
         <RowDefinition/>
       </Grid.RowDefinitions>
@@ -36,13 +41,32 @@
       </Grid.ColumnDefinitions>
 
       <Button x:Name="UserPageBtn"
-          Grid.Row="0"
-          Grid.Column="0"
-          Text="User"/>
+        Grid.Row="0"
+        Grid.Column="0"
+         WidthRequest="80"
+        HeightRequest="80"
+        CornerRadius="50"
+        BackgroundColor="#333F69"
+        ImageSource="{Binding AccountImageSource}"
+        ContentLayout="Top"
+        LineBreakMode="WordWrap"
+        FontAttributes="Bold"
+        FontSize="14"
+        Clicked="GoToUserPage_Clicked"
+        Text="User"/>
       <Button x:Name="MapPageBtn"
           Grid.Row="0"
           Grid.Column="1"
-          Text="Map"/>
+           WidthRequest="80"
+        HeightRequest="80"
+        CornerRadius="50"
+        BackgroundColor="#333F69"
+        ImageSource="map.png"
+        ContentLayout="Top"
+        LineBreakMode="WordWrap"
+        FontAttributes="Bold"
+        FontSize="14"
+        Text="Map"/>
 
     </Grid>
   </Grid>

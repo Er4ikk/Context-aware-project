@@ -18,12 +18,12 @@ public class UserInfo
 
         this.Mail = user.Mail;
         this.Password = user.Password;
-        // this.Id = user.Id;
+        this.Id = user.Id;
     }
 
     // [JsonIgnore]
 
-    // public int Id { get; set; }
+    public int Id { get; set; }
     public string Mail { get; set; }
 
     public string Password { get; set; }

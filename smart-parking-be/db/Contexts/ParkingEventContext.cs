@@ -44,6 +44,17 @@ public class ParkingEventContext:PostGresContext
         return parkingEvent;
     }
 
+     public List<ParkingEvent> GetParkingEventsByUserId(int UserId)
+    {
+        List<ParkingEvent> parkingEvent = ParkingEvent.AsNoTracking()
+        .Where((ParkingEvent) => ParkingEvent.UserId == UserId)
+        .AsEnumerable()
+        .Take(10)
+        .OrderByDescending(parkingEvent => parkingEvent.TimeStamp)
+        .ToList();
+
+        return parkingEvent;
+    }
     public List<ParkingEvent> GetParkingEventsByTimeRange(DateTimeOffset start, DateTimeOffset end)
     {
         DateTimeOffset startUtc = start.ToUniversalTime();

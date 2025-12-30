@@ -93,6 +93,12 @@ namespace smartparking.db.postgres
             return _ParkingEventContext.GetParkingEventsByParkingAreaId(id);
         }
 
+        public List<ParkingEvent> GetParkingEventsByUserId(int UserId)
+        {
+            _logger.LogInformation($"Getting parking events by User Id {UserId}");
+            return _ParkingEventContext.GetParkingEventsByUserId(UserId);
+        }
+
         public List<ParkingEvent> GetParkingEventsByTimeRange(DateTimeOffset start, DateTimeOffset end)
         {
             _logger.LogInformation($"Getting parking events between time range {start} - {end}");

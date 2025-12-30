@@ -12,7 +12,7 @@ public class ParkingEventInfo
     {
         // this.Id = new Random().Next();
         this.ParkingAreaId = ParkingAreaId;
-        this.TimeStamp = DateTimeOffset.Now;
+        this.TimeStamp =DateTimeOffset.UtcNow;
         this.EventType = EventType;
         this.UserId = UserId;
         this.ParkingCoordinates = ParkingCoordinates;
@@ -59,7 +59,7 @@ public class ParkingEventInfo
         ParkingEvent parkingEvent = new ParkingEvent();
         parkingEvent.Id = this.Id;
         parkingEvent.ParkingAreaId = this.ParkingAreaId;
-        parkingEvent.TimeStamp = this.TimeStamp;
+        parkingEvent.TimeStamp = DateTimeOffset.UtcNow;
         parkingEvent.EventType = this.EventType;
         parkingEvent.UserId = this.UserId;
         if(this.ParkingCoordinates!= null)

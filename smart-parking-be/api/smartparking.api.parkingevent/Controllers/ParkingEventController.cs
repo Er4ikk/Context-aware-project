@@ -15,8 +15,7 @@ namespace parkingEvent.api.parkingEvent
 
         private readonly PostGresClient _parkingEventClient;
         private readonly ILogger<ParkingEventController> _logger;
-        private GeoJsonWriter geoJsonWriter = new GeoJsonWriter();
-        public ParkingEventController(
+               public ParkingEventController(
                                     PostGresClient parkingEventClient,
                                     ILogger<ParkingEventController> logger
 
@@ -55,6 +54,21 @@ namespace parkingEvent.api.parkingEvent
             return parkingEventInfos;
 
         }
+
+         [HttpGet("{UserId}")]
+        public List<ParkingEventInfo> GetParkingEvenstByUserId(int UserId)
+        {
+            _logger.LogInformation($"Getting parkingEvents with user id: {UserId}");
+            //TO DO AWAIT CLIENT TO COMPLETE THE OPERATION
+
+            List<ParkingEvent> parkingEvents = _parkingEventClient.GetParkingEventsByUserId(UserId);
+            List<ParkingEventInfo> parkingEventInfos= new List<ParkingEventInfo>();
+
+            parkingEvents.ForEach( (el ) => parkingEventInfos.Add(new ParkingEventInfo(el)));
+            return parkingEventInfos;
+
+        }
+
 
         [HttpGet("{start}/{end}/{parkingAreaId}")]
         public List<ParkingEventInfo> GetParkingEvenstByTimeRange(DateTimeOffset start,DateTimeOffset end,int parkingAreaId)
@@ -101,6 +115,15 @@ namespace parkingEvent.api.parkingEvent
             Console.WriteLine($"ParkingEvent with made with parkingEventId: {parkingEventInfo.Id}");
 
             await _parkingEventClient.CreateParkingEvent(parkingEventInfo.Convert());
+            if (parkingEventInfo.EventType == EventType.PARKING)
+            {
+                await _parkingEventClient.ReducePlaceAvailable(parkingEventInfo.ParkingAreaId);
+            }
+            else
+            {
+                await _parkingEventClient.AddPlaceAvailable(parkingEventInfo.ParkingAreaId);
+            }
+            
 
         }
 

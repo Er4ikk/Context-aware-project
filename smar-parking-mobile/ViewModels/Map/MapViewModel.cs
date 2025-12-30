@@ -32,9 +32,8 @@ public partial class MapViewModel : BindableObject
   public async Task LoadParkingAreas()
   {
     var areas = await _parkingAreaService.GetParkingAreas();
+    ParkingAreaCache.parkingAreas = areas;
 
-    // Torniamo sul thread principale per aggiornare la UI
-    // In Avalonia si usa Dispatcher.UIThread, in MAUI MainThread
     MainThread.BeginInvokeOnMainThread(() =>
     {
       ParkingAreas.Clear();
@@ -42,6 +41,7 @@ public partial class MapViewModel : BindableObject
       {
         ParkingAreas.Add(area);
       }
+      
     });
   }
 

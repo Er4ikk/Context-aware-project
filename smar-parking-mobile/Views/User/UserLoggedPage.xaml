@@ -1,0 +1,51 @@
+<ContentPage
+  xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+  xmlns:local="clr-namespace:smar_parking_mobile"
+   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d"
+  d:DesignWidth="800"
+  d:DesignHeight="450"
+  x:Class="smar_parking_mobile.Views.UserLoggedPage">
+
+  
+  <VerticalStackLayout Spacing="20" Padding="30" VerticalOptions="Start">
+       
+        
+        <Image Source="user.png" HeightRequest="50" />
+        <Label Text="{Binding CurrentUser.Mail, StringFormat='Welcome  {0}!'}" 
+               FontSize="24" 
+               HorizontalOptions="Center" />
+
+        <Grid>
+        <CollectionView ItemsSource="{Binding UserParkingEvents}"
+                        EmptyView="Nessun evento di parcheggio trovato.">
+            
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="10,5" Padding="15" CornerRadius="10" BackgroundColor="#F0F0F0">
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="{Binding EventType}" 
+                                   FontAttributes="Bold" 
+                                   FontSize="16" 
+                                   TextColor="#333F69" />
+                            
+                            <HorizontalStackLayout Spacing="10">
+                                <Label Text="Area ID:" FontAttributes="Bold" />
+                                <Label Text="{Binding ParkingAreaId}" />
+                            </HorizontalStackLayout>
+
+                            <Label Text="{Binding TimeStamp, StringFormat='Timestamp: {0}'}" 
+                                   FontSize="12" 
+                                   TextColor="Gray" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            
+        </CollectionView>
+    </Grid>
+  </VerticalStackLayout>
+
+  </ContentPage>

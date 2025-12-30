@@ -26,11 +26,16 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			})
-			.UseMauiMaps()
-			.UseShiny();
+			.UseMauiMaps();
+			// .UseShiny();
 
 		//SERVICE REGISTRATION
 		builder.Services.AddTransient<MapViewModel>();
+		builder.Services.AddTransient<TabViewModel>();
+		builder.Services.AddTransient<UserViewModel>();
+		builder.Services.AddTransient<UserPage>();
+		builder.Services.AddTransient<UserLoggedPage>();
+		builder.Services.AddTransient<TabView>();
 		builder.Services.AddTransient<MapView>();
 		builder.Services.AddTransient<MainPage>();
 

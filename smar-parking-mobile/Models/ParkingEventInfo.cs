@@ -17,6 +17,11 @@ public class ParkingEventInfo
         
     }
 
+    public ParkingEventInfo()
+    {
+        
+    }
+
 
     
     public int Id { get; set; }
