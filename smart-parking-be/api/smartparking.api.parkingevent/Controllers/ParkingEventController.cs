@@ -115,7 +115,7 @@ namespace parkingEvent.api.parkingEvent
             Console.WriteLine($"ParkingEvent with made with parkingEventId: {parkingEventInfo.Id}");
 
             await _parkingEventClient.CreateParkingEvent(parkingEventInfo.Convert());
-            if (parkingEventInfo.EventType == EventType.PARKING)
+            if (parkingEventInfo.EventType == EventType.LEAVING)
             {
                 await _parkingEventClient.ReducePlaceAvailable(parkingEventInfo.ParkingAreaId);
             }

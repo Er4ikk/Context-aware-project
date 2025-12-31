@@ -47,7 +47,7 @@
         HeightRequest="80"
         CornerRadius="50"
         BackgroundColor="#333F69"
-        ImageSource="{Binding AccountImageSource}"
+        ImageSource="user.png"
         ContentLayout="Top"
         LineBreakMode="WordWrap"
         FontAttributes="Bold"

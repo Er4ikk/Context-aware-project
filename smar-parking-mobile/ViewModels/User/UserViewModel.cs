@@ -9,10 +9,7 @@ namespace smar_parking_mobile.ViewModels;
 public partial class UserViewModel : ViewModelBase
 {
 
-    private string _searchHint = "Search";
- 
-    private string[] ParkingAreas;
-
+   public UserInfo CurrentUser { get; set; } = UserAuthentication.userInfo;
     private UserService _userService;
     private ParkingEventService _parkingEventService;
     public ObservableCollection<ParkingEventInfo> UserParkingEvents { get; set; } = new();
@@ -27,6 +24,7 @@ public partial class UserViewModel : ViewModelBase
   public async Task Authenticate(string mail, string password)
   {  
     await _userService.Authenticate(mail,password);
+    CurrentUser = UserAuthentication.userInfo;
   }
 
    public async Task LoadParkingEventsOfUser(int UserId)

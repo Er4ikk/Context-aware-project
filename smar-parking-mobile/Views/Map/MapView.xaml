@@ -18,7 +18,7 @@
         <maps:Map Grid.Row="0"
                 IsShowingUser="True"
                 x:Name="map"
-                HeightRequest="550"
+                HeightRequest="300"
                 />
         <!-- <CollectionView Grid.Row="1"
                 ItemsSource="{Binding ParkingAreas}"

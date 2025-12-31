@@ -1,4 +1,5 @@
 
+using System.ComponentModel;
 using System.Diagnostics;
 using CommunityToolkit.Maui.Core;
 using smar_parking_mobile.Common;
@@ -10,18 +11,35 @@ namespace smar_parking_mobile.ViewModels;
 
 public partial class TabViewModel : ViewModelBase
 {
-    private string UserLabel = "User";
+
     private readonly ParkingEventService _parkingEventService;
     private readonly UserService _userService;
 
+    public event PropertyChangedEventHandler PropertyChanged;
+    protected void OnPropertyChanged(string name) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-
+   
+    public string AccountImageSource {get;set;} = "user_not_logged.png";
+    
     public TabViewModel()
     {
 
         _parkingEventService = new ParkingEventService();
         _userService = new UserService();
+
+        UserAuthentication.UserChanged += (s,e) =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                if(UserAuthentication.userInfo !=null)
+                    this.AccountImageSource = "user.png";
+            })  ;
+        };
+      
     }
+
+  
 
 
     public async Task ParkBike()
@@ -37,7 +55,7 @@ public partial class TabViewModel : ViewModelBase
             {
 
                 Coordinates? userCoordinates = new Coordinates(location.Longitude, location.Latitude);
-               
+
                 bool isInsideParkingArea = CheckIfIsInsideAnyParkingArea(userCoordinates);
 
                 if (isInsideParkingArea)
@@ -47,6 +65,7 @@ public partial class TabViewModel : ViewModelBase
                     parkingEvent.EventType = EventType.PARKING;
                     parkingEvent.ParkingCoordinates = new Coordinates(location.Longitude, location.Latitude);
                     await _parkingEventService.CreateParkingEventAsync(parkingEvent);
+
                     Debug.WriteLine("Parking done with success");
                 }
                 else
@@ -78,7 +97,7 @@ public partial class TabViewModel : ViewModelBase
     {
         if (UserAuthentication.userInfo != null)
         {
-             Location? location = await UserPosition.GetUserLocationAsync();
+            Location? location = await UserPosition.GetUserLocationAsync();
             ParkingEventInfo parkingEvent = new ParkingEventInfo();
 
 
@@ -119,6 +138,8 @@ public partial class TabViewModel : ViewModelBase
             throw new Exception(text);
         }
     }
+
+
 
 
     public bool CheckIfIsInsideAnyParkingArea(Coordinates? userCoordinates)

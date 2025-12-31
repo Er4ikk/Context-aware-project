@@ -10,7 +10,7 @@ namespace smar_parking_mobile.Views;
 public partial class UserLoggedPage : ContentPage
 {
 
-   public UserInfo CurrentUser { get; set; } = UserAuthentication.userInfo;
+   
     private UserViewModel viewModel;
     public UserLoggedPage()
     {
@@ -19,7 +19,6 @@ public partial class UserLoggedPage : ContentPage
                   ?? App.Current.Handler.MauiContext.Services.GetService<UserViewModel>();
         BindingContext = vm;
         viewModel = (UserViewModel)BindingContext;
-        CurrentUser = UserAuthentication.userInfo;
     }
 
 

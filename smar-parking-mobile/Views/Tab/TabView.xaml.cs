@@ -10,7 +10,7 @@ namespace smar_parking_mobile.Views;
 public partial class TabView : ContentView
 {
     private TabViewModel viewModel;
-    
+
     public string AccountImageSource = "user.png";
     public string releaseSmartButtonText = "Release a Smart Bike";
     public TabView()
@@ -21,14 +21,7 @@ public partial class TabView : ContentView
         BindingContext = vm;
         viewModel = (TabViewModel)BindingContext;
 
-        if (UserAuthentication.userInfo != null)
-        {
-            this.AccountImageSource = "user.png";
-        }
-        else
-        {
-            this.AccountImageSource = "user_not_logged.png";
-        }
+        
     }
 
 
@@ -36,12 +29,14 @@ public partial class TabView : ContentView
     private async void ReleaseSmartBikeBtn_Clicked(object sender, EventArgs e)
     {
         Button releaseSmartButton = (Button)sender;
-        if (releaseSmartButton.Text == "Release a Smart Bike!")
+        if (releaseSmartButton.Text == "Release a SmartBike!")
         {
             try
             {
                 await viewModel.ReleaseBike();
                 releaseSmartButton.Text = "Confirm Parking";
+                await ToastService.ShowToast("Bike succesfully released", ToastDuration.Long, 14);
+
             }
             catch (Exception ex)
             {
@@ -55,7 +50,8 @@ public partial class TabView : ContentView
             try
             {
                 await viewModel.ParkBike();
-                releaseSmartButton.Text = "Release a Smart Bike!";
+                releaseSmartButton.Text = "Release a SmartBike!";
+                await ToastService.ShowToast("Bike successfully parked", ToastDuration.Long, 14);
             }
             catch (Exception ex)
             {
@@ -67,7 +63,7 @@ public partial class TabView : ContentView
 
     private async void GoToUserPage_Clicked(object sender, EventArgs e)
     {
-        if(UserAuthentication.userInfo != null)
+        if (UserAuthentication.userInfo != null)
             await Shell.Current.GoToAsync(nameof(UserLoggedPage));
         else
             await Shell.Current.GoToAsync(nameof(UserPage));

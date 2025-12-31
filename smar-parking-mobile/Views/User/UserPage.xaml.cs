@@ -41,6 +41,7 @@ public partial class UserPage : ContentPage
             {
                 await viewModel.Authenticate(mail,password);
                 await Shell.Current.GoToAsync($"//{nameof(MainPage)}");
+                await ToastService.ShowToast("Login Succesfull!", ToastDuration.Long, 14);
             }
             catch (Exception ex)
             {

@@ -13,7 +13,7 @@
   <VerticalStackLayout Spacing="20" Padding="30" VerticalOptions="Start">
        
         
-        <Image Source="user_not_logged.png" HeightRequest="100" />
+        <Image Source="user_not_logged.png" HeightRequest="50" />
         <Label Text="Access Required" 
                FontSize="24" 
                HorizontalOptions="Center" />
