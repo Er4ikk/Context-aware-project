@@ -12,7 +12,7 @@ public class ParkingAreaService
     HttpClient _httpClient;
     JsonSerializerOptions _serializerOptions;
     string BaseUrlDevelop = DeviceInfo.Platform == DevicePlatform.Android 
-                            ? "http://10.0.2.2:5265" 
+                            ? "http://10.0.2.2" 
                             : "http://localhost:5265";
     string BaseUrl = "http://smartparking2.com";
 
@@ -20,6 +20,8 @@ public class ParkingAreaService
     {
         _httpClient = HttClientService.Instance.GetHttpClient();
         _serializerOptions = HttClientService.Instance.GetJsonSerializerOptions();
+
+        _httpClient.DefaultRequestHeaders.Host = "smartparking2.com";
     }
 
     public async Task<List<ParkingAreaInfo>> GetParkingAreas()

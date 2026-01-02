@@ -11,7 +11,7 @@ public class UserService
     HttpClient _httpClient;
     JsonSerializerOptions _serializerOptions;
     string BaseUrlDevelop = DeviceInfo.Platform == DevicePlatform.Android 
-                            ? "http://10.0.2.2:5266" 
+                            ? "http://10.0.2.2" 
                             : "http://localhost:5266";
     string BaseUrl = "http://smartparking2.com";
 
@@ -19,6 +19,7 @@ public class UserService
     {
         _httpClient = HttClientService.Instance.GetHttpClient();
         _serializerOptions = HttClientService.Instance.GetJsonSerializerOptions();
+         _httpClient.DefaultRequestHeaders.Host = "smartparking2.com";
     }
 
     public async Task Authenticate(string mail, string pwd)

@@ -19,7 +19,7 @@ public class ParkingEventService
     GeoJsonReader geoJsonReader = new GeoJsonReader();
     GeoJsonWriter geoJsonWriter = new GeoJsonWriter();
     string BaseUrlDevelop = DeviceInfo.Platform == DevicePlatform.Android
-                            ? "http://10.0.2.2:5264"
+                            ? "http://10.0.2.2"
                             : "http://localhost:5264";
     string BaseUrl = "http://smartparking2.com";
 
@@ -27,6 +27,7 @@ public class ParkingEventService
     {
         _httpClient = HttClientService.Instance.GetHttpClient();
         _serializerOptions = HttClientService.Instance.GetJsonSerializerOptions();
+         _httpClient.DefaultRequestHeaders.Host = "smartparking2.com";
     }
 
     public async Task<List<ParkingEventInfo>?> GetParkingEventsByUserId(int userId)

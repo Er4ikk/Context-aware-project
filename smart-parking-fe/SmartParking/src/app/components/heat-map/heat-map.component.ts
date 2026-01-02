@@ -14,6 +14,7 @@ import { ParkingCoordinates, PlacesLeftColor } from 'src/app/entities/entities';
 import { ParkingEventService } from 'src/app/services/parking-event.service';
 import { ReplaySubject, takeUntil, tap } from 'rxjs';
 import { fromLonLat } from 'ol/proj';
+import { OSM } from 'ol/source';
 
 // const blur: HTMLInputElement | null = document.getElementById('blur') as HTMLInputElement;
 // const radius: HTMLInputElement | null = document.getElementById('radius') as HTMLInputElement;
@@ -42,9 +43,7 @@ export class HeatMapComponent implements OnInit, OnDestroy {
   vector!: HeatmapLayer;
 
   raster: TileLayer = new TileLayer({
-    source: new StadiaMaps({
-      layer: 'stamen_toner',
-    }),
+    source: new OSM(),
   });
 
 

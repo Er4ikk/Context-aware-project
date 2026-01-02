@@ -25,4 +25,7 @@ export class ParkingEventService {
   public getParkinngEventsFeatures(){
     return this.httpClient.get<Feature[]>(this.baseUrl+"/api/ParkingEvent/GetParkingEventsFeatures")
   }
+  public extractParkingAreasFromParkingEvents(){
+    return this.httpClient.get<ParkingArea[]>(this.baseUrl+"/api/ParkingEvent/ExtractParkingAreasFromParkingEvents")
+  }
 }

@@ -10,7 +10,7 @@ public static class GeoJsonConverterMaui
     public static Geometry ConvertGeoJsonToMauiGeometry(string geoJson)
     {
         var serializer = new GeoJsonReader();
-        // Il parsing trasforma la stringa in una Geometry (Polygon)
+        
         Geometry geometry = serializer.Read<Geometry>(geoJson);
 
         return geometry;
