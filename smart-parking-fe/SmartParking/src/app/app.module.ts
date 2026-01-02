@@ -21,6 +21,9 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { ParkingAreaDetailComponent } from './components/parking-area-detail/parking-area-detail.component';
+import { DataAnalysisComponent } from './components/data-analysis/data-analysis.component';
+import { HeatMapComponent } from './components/heat-map/heat-map.component';
+import { ClusteringComponent } from './components/clustering/clustering.component';
 
 
 
@@ -32,7 +35,10 @@ import { ParkingAreaDetailComponent } from './components/parking-area-detail/par
     FilterComponent,
     TemporalGraphComponent,
     HeaderComponent,
-    ParkingAreaDetailComponent
+    ParkingAreaDetailComponent,
+    DataAnalysisComponent,
+    HeatMapComponent,
+    ClusteringComponent
   ],
   imports: [
     MatToolbarModule,

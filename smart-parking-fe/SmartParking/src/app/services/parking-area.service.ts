@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ParkingArea } from '../entities/entities';
+import { ParkingArea, ParkingAreaCentroid } from '../entities/entities';
 import { ReplaySubject, Subject } from 'rxjs';
 
 @Injectable({
@@ -15,6 +15,10 @@ export class ParkingAreaService {
 
   public getParkingAreas(){
     return this.httpClient.get<ParkingArea[]>(this.baseUrl+"/api/ParkingArea/GetParkingAreas")
+  }
+
+  public getParkingAreasCentroids(){
+    return this.httpClient.get<ParkingAreaCentroid[]>(this.baseUrl+"/api/ParkingArea/GetParkingAreasCentroids")
   }
 
   public getParkingAreaById(id:number){

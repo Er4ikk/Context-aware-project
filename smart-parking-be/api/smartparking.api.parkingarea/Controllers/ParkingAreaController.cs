@@ -1,5 +1,7 @@
 
 using Microsoft.AspNetCore.Mvc;
+using NetTopologySuite.Algorithm;
+using parkingCenter.api.parkingCenter;
 using smartparking.db.parkingarea;
 using smartparking.db.postgres;
 
@@ -46,6 +48,19 @@ namespace parkingArea.api.parkingArea
 
             var parkingAreas = _parkingAreaClient.GetParkingAreas();
             return parkingAreas.Select(x => new ParkingAreaInfo(x)).ToList();
+
+        }
+
+        [HttpGet]
+        public List<ParkingAreaCentroid> GetParkingAreasCentroids()
+        {
+            _logger.LogInformation($"Getting parkingAreas points");
+            //TO DO AWAIT CLIENT TO COMPLETE THE OPERATION
+
+            var parkingAreas = _parkingAreaClient.GetParkingAreas();
+            List<ParkingAreaCentroid> centroids= new List<ParkingAreaCentroid>();
+            centroids = parkingAreas.Select(parkingArea => new ParkingAreaCentroid(parkingArea)).ToList();
+            return centroids;
 
         }
 

@@ -1,0 +1,32 @@
+<div>
+
+
+  <form action="">
+    <mat-label>Blur</mat-label>
+    <input id="radius" type="range" [formControl]="blur" min="1" max="50" step="1" />
+    <div>
+      <mat-label>Radius</mat-label>
+
+      <input id="blur" [formControl]="radius" type="range" min="1" max="50" step="1"/>
+    </div>
+  </form>
+        <form (submit)="$event.preventDefault()">
+
+  <!-- <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+    <input matStartDate formControlName="start" placeholder="Start date">
+    <input matEndDate formControlName="end" placeholder="End date">
+  </mat-date-range-input>
+  <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle> -->
+  <!-- <mat-date-range-picker #picker></mat-date-range-picker>
+
+
+  <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+ 
+  <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+  
+ 
+</form>
+    <div id="heatmap" class="map-container"></div>
+   
+</div>

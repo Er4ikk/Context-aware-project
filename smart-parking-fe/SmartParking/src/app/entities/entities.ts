@@ -9,6 +9,7 @@ export interface ParkingEvent {
   parkingAreaId: number
   timeStamp: string
   eventType: string
+  parkingCoordinates: ParkingCoordinates
 }
 
 export interface PolygonCoordinates {
@@ -41,5 +42,27 @@ export const EventType={
      LEAVING : "Leaving"
     
 
+}
+
+export interface Geometry {
+    coordinates: number[];
+    type: string;
+}
+
+export interface Feature {
+    type: string;
+    geometry: Geometry;
+}
+
+export interface ParkingCoordinates{
+  x:number,
+  y:number
+}
+
+export interface ParkingAreaCentroid {
+    id: number;
+    center: string | null;
+    maxCapacity: number;
+    placesLeft: number;
 }
 

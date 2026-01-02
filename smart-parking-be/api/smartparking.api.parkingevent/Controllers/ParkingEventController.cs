@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using smartparking.db.parkingarea;
 using smartparking.db.parkingevent;
 using smartparking.db.postgres;
-using NetTopologySuite.IO;
+using NetTopologySuite.Geometries;
 
 namespace parkingEvent.api.parkingEvent
 {
@@ -106,6 +106,41 @@ namespace parkingEvent.api.parkingEvent
 
             var parkingEvents = _parkingEventClient.GetParkingEvents();
             return parkingEvents.Select(x => new ParkingEventInfo(x)).ToList();
+
+        }
+
+
+        [HttpGet]
+        public List<Feature> GetParkingEventsFeatures()
+        {
+            _logger.LogInformation($"Getting parkingEvents ");
+            //TO DO AWAIT CLIENT TO COMPLETE THE OPERATION
+
+            var parkingEvents = _parkingEventClient.GetParkingEvents();
+            List<Coordinates?> coordinates = parkingEvents
+            .Select(x => new ParkingEventInfo(x))
+            .Select(x => x.ParkingCoordinates)
+            .Where(parkingCoordinates => parkingCoordinates?.x != null && parkingCoordinates?.y != null)
+            .ToList();
+
+            List<Feature> parkingEventsFeatures = new List<Feature>();
+            Point point;
+            Feature feature;
+            Coordinates coordinate;
+
+            coordinates.ForEach(coordinate  =>
+            {
+                if(coordinate != null)
+                {
+                    point = new Point(new Coordinate(coordinate.x,coordinate.y));
+                    coordinate = new Coordinates(coordinate.x,coordinate.y);
+                    feature = new Feature("Feature",new Properties(), new Geometry(point.GeometryType,coordinate));
+                    parkingEventsFeatures.Add(feature); 
+                }
+                    
+            });
+
+            return parkingEventsFeatures;
 
         }
 
